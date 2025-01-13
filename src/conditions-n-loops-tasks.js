@@ -462,18 +462,27 @@ function rotateMatrix(matrix) {
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
 function sortByAsc(arr) {
-  const array = arr;
+  const copyArray = arr;
+  for (let i = 1; i < copyArray.length; i += 1) {
+    const key = copyArray[i];
+    let left = 0;
+    let right = i;
 
-  for (let i = 1; i < array.length; i += 1) {
-    const numberToInsert = array[i];
-    let j = i - 1;
-    while (j >= 0 && array[j] > numberToInsert) {
-      array[j + 1] = array[j];
-      j -= 1;
+    while (left < right) {
+      const mid = Math.floor((left + right) / 2);
+      if (copyArray[mid] > key) {
+        right = mid;
+      } else {
+        left = mid + 1;
+      }
     }
-    array[j + 1] = numberToInsert;
+
+    for (let j = i; j > left; j -= 1) {
+      copyArray[j] = copyArray[j - 1];
+    }
+    copyArray[left] = key;
   }
-  return array;
+  return arr;
 }
 
 /**
